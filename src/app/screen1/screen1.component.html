@@ -1,0 +1,127 @@
+<div class="container">
+    <div class="text-center">
+        <img src="../../assets/baner.jfif" class="img-fluid">
+    </div>
+
+    <form class="mt-5" #invoiceForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row align-items-center">
+            <div class="col-md-2">
+                <label for="invoice">Invoice Number</label>
+
+                <input type="text" name="invoice" placeholder="Invoice Number" class="form-control"
+                    [(ngModel)]="invoice.invoice">
+
+            </div>
+            <div class="col-md-2">
+                <label for="net">Net</label>
+
+                <input type="text" name="net" placeholder="$00000,00" class="form-control"
+                    (ngModelChange)="netChange($event)" [(ngModel)]="invoice.net">
+
+            </div>
+            <div class="col-md-2">
+                <label for="tax">Tax</label>
+                <select name="tax" class="form-control" id="tax" [(ngModel)]="invoice.tax"
+                    (ngModelChange)="onTaxChange($event)">
+                    <option>0.0</option>
+                    <option>10.50</option>
+                    <option>21.00</option>
+                    <option>27.00</option>
+                </select>
+
+            </div>
+            <div class="col-md-2">
+                <label>Total</label>
+
+                <input type="text" name="total" placeholder="Total" class="form-control" [(ngModel)]="invoice.total">
+
+            </div>
+            <div class="col-md-2 ">
+                <br>
+                <div class="btn-group" role="group" aria-label="Third group">
+
+                    <input type="submit" class="btn btn-outline-success" value="submit">
+                    <input type="reset" class="btn btn-outline-danger" value="clear">
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </form>
+
+    <div class="row mt-5">
+     <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Invoice Number</th>
+                    <th>Net</th>
+                    <th>%Tax</th>
+                    <th>tax</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-striped">
+                <tr *ngFor=" let invoice of invoices">
+                    <th>
+                        {{invoice.invoiceNumber}}
+                    </th>
+                    <th>
+                        {{invoice.net | currency}}
+                    </th>
+                    <th>
+                        {{invoice.tax | number:'1.2'}}
+                    </th>
+                    <th>
+                        {{(invoice.tax /100)*invoice.net | currency}}
+                    </th>
+                    <th>
+                        {{invoice.total | currency}}
+                    </th>
+                    <th>
+                        <button class="btn btn-outline-danger" (click)="deleteInvoice(invoice._id)">Remove</button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+     </div>
+
+    </div>
+
+   <div class="card justify-content-center">
+    <div class="row justify-content-center mb-5">
+        {{citydata.city.name + " / "+ citydata.city.country}}
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-2" *ngFor="let forecasts of forecast">
+
+            <div class="col-md-12">
+                <strong>
+                    {{forecasts.dt_txt}}
+
+                </strong>
+
+            </div>
+            <div class="col-md-12">
+                <span>{{forecasts.main.temp}}</span>ºC
+
+            </div>
+            <div class="col-md-12">
+                <p>
+
+                    {{forecasts.weather["0"].description | uppercase}}
+
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+   </div>
+
+
+</div>
